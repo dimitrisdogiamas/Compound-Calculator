@@ -1,51 +1,52 @@
-const prompt= require("prompt-sync")()
+const prompt = require('prompt-sync')()
+// Compound interest calculator that prompts a user for some inputs, and finally calculates the compounded interest value
 
-// define the function that we can use to calculate the final value of the compounded interset 
 // let init_amount = 20000
-// let monthly_contribution = 400 
-// let number_Of_Years = 30 
-// let interset_rate= 10
+// let monthly_contribution = 400
+// let number_of_years = 30
+// let interest_rate = 10
 
-// define a function that would calculate the difference (ie the effectthat compounding has had )
-function compoundInterest(init_amount, monthly_contribution, number_Of_Years, interset_rate) {
-  let total = init_amount
-  let annual_contribution = monthly_contribution * 12
-  for (let i = 0; i < number_Of_Years; i++){
-    total = total + annual_contribution;
-    total= total*((interset_rate+100 )/100)
-  }
+// step 1 - define a function that we can use to calculate the final value of the compounded interest
 
-  return total.toFixed(2);
+function compoundInterest(init_amount, monthly_contribution, number_of_years, interest_rate) {
+    let total = init_amount
+    let annual_contribution = monthly_contribution * 12
+
+    for (let i = 0; i < number_of_years; i++) {
+        total = total + annual_contribution
+        total = total * ((100 + interest_rate) / 100)
+    }
+
+    return total.toFixed(2)
 }
 
-function calculateRegular(init_amount, monthly_contribution, number_Of_Years) {
-  let regular_value = nit_amount + monthly_contribution * 12 * number_Of_Years
-  console.log()
-  return(nit_amount + monthly_contribution * 12 * number_Of_Years)
+// step 2 - define a function that would calculate the difference (ie the effect that compounding has had)
+
+function calculateRegular(init_amount, monthly_contribution, number_of_years) {
+    let regular_value = init_amount + monthly_contribution * 12 * number_of_years
+    return regular_value.toFixed(2)
 }
 
-function printOutput(init_amount,monthly_contribution,number_Of_Years, interset_rate) {
-  let final_value = compoundInterest(init_amount,monthly_contribution,number_Of_Years, interset_rate)
-  let value_without_compounding= calculateRegular(init_amount,monthly_contribution,number_Of_Years)
-  let summary = `init_amount: ${init_amount}\nMonthly_contribution:${monthly_contribution}\nNumber_of_years:${number_Of_Years}\\nINTEREST_RATE:${interset_rate}\n\nFina;_compounded_value:$${final_value}\nREGULAR_AMOUNT: $${value_without_compounding}\nDifference:$${final_value - value_without_compounding}`
-  console.log(summary)
-}
+// step 3 - to create a run function that then prompts the user for all necessary inputs required to calculate the final amounts
 
-// step-3 to create a run function that then promts the user for all necessary inputs required to calculate the final amounts 
 function run() {
-  let init_amount = prompt("what is your initial inverstment: ")// this is how we take user's prompt 
-  let monthly_contribution = prompt("what's your monthly contribution?: ")
-  let number_Of_Years = prompt("For how many years would you like to compound your investment: ")
-  let interset_rate = prompt("what is your expected interest rate (%) over those years:   ?")
-  printOutput(init_amount,monthly_contribution,number_Of_Years,interset_rate) // this refers to the function print output that we made before 
+    let init_amount = parseInt(prompt('What is your initial investment ($) ? '))
+    let monthly_contribution = parseInt(prompt('What is your monthly contribution ($) ? '))
+    let number_of_years = parseInt(prompt('For how many years would you like to compound your investment? '))
+    let interest_rate = parseInt(prompt('What is your expected interest rate (%) over these years? '))
+
+    printOutput(init_amount, monthly_contribution, number_of_years, interest_rate)
 }
 
-// step -4 inside of the function , make a nice pretty print statement using string literals that gives the financial breakdown 
+// step 4 - inside of said function, make a nice pretty print statement using a template literal string that gives the financial breakdown
 
-function printOutput(init_amount, monthly_contribution, number_Of_Years, interset_rate) {
-  let final_value = compoundInterest(init_amount, monthly_contribution, number_Of_Years, interset_rate)
-  let value_without_compounding = calculateRegular(init_amount, monthly_contribution, number_Of_Years)
-  let summary = `init_amount: ${init_amount}\nMonthly_contribution:${monthly_contribution}\nNumber_of_years:${number_Of_Years}\\nINTEREST_RATE:${interset_rate}\n\nFina;_compounded_value:$${final_value}\nREGULAR_AMOUNT: $${value_without_compounding}\nDifference:$${final_value - value_without_compounding}`
-  console.log(summary)
+function printOutput(init_amount, monthly_contribution, number_of_years, interest_rate) {
+    let final_value = compoundInterest(init_amount, monthly_contribution, number_of_years, interest_rate)
+
+    let value_without_compounding = calculateRegular(init_amount, monthly_contribution, number_of_years)
+
+    let summary = `INIT_AMOUNT: $${init_amount}\nMONTHLY_CONTRIBUTION: $${monthly_contribution}\nNUMBER_OF_YEARS: ${number_of_years}\nINTEREST_RATE: ${interest_rate}%\n\nFINAL_COMPOUNDED_VALUE: $${final_value}\nREGULAR_AMOUNT: $${value_without_compounding}\nDIFFERENCE: $${final_value - value_without_compounding}`
+    console.log(summary)
 }
+
 run()
